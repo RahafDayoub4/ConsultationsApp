@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:newtest/presentation/resources/routes_manger.dart';
+import 'package:newtest/presentation/resources/theme_manger.dart';
 
 class MyApp extends StatefulWidget {
   // const MyApp({super.key}); //defult constructor
@@ -20,6 +22,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return  Container();
+    return  MaterialApp(
+      onGenerateRoute: RouteGenerator.getRout,
+      initialRoute: Routes.splashRoute,
+      theme: getAppLicationTheme(),
+    );
   }
 }
