@@ -22,8 +22,8 @@ ThemeData getAppLicationTheme() {
 
     //AppBar theme 
     appBarTheme: AppBarTheme(
-    color:  ColorManger.primary,
-    elevation: AppSize.s4,
+    backgroundColor: ColorManger.white,
+    elevation: AppSize.s0,
     shadowColor:  ColorManger.lightPrimary,
     titleTextStyle: getRegularStyle(color: ColorManger.white,fontSize: FontSize.s16)
     ),

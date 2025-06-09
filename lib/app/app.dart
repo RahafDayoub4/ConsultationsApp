@@ -9,7 +9,7 @@ class MyApp extends StatefulWidget {
   MyApp._internal();
 
   static final MyApp _instance =
-       MyApp._internal(); // singleton or single instance
+      MyApp._internal(); // singleton or single instance
 
   factory MyApp() {
     return _instance; // factory
@@ -22,9 +22,10 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return  MaterialApp(
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
       onGenerateRoute: RouteGenerator.getRout,
-      initialRoute: Routes.splashRoute,
+      initialRoute: Routes.onboardingRoute,
       theme: getAppLicationTheme(),
     );
   }
