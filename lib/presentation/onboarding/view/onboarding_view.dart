@@ -1,14 +1,11 @@
 import 'dart:ui_web';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:newtest/domain/models.dart';
 import 'package:newtest/presentation/onboarding/viewmodel/onboarding_viewmodel.dart';
-import 'package:newtest/presentation/resources/assests_manger.dart';
 import 'package:newtest/presentation/resources/color_manger.dart';
 import 'package:newtest/presentation/resources/routes_manger.dart';
-import 'package:newtest/presentation/resources/strings_manger.dart';
 import 'package:newtest/presentation/resources/values_manger.dart';
 
 class OnboardingView extends StatefulWidget {
