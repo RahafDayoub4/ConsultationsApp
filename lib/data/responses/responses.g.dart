@@ -14,14 +14,14 @@ BaseResponse _$BaseResponseFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$BaseResponseToJson(BaseResponse instance) =>
     <String, dynamic>{'status': instance.status, 'message': instance.message};
 
-CostomerResponse _$CostomerResponseFromJson(Map<String, dynamic> json) =>
-    CostomerResponse(
-      (json['id'] as num?)?.toInt(),
+CustomerResponse _$CustomerResponseFromJson(Map<String, dynamic> json) =>
+    CustomerResponse(
+      json['id'] as String?,
       json['name'] as String?,
       (json['numOfNotifications'] as num?)?.toInt(),
     );
 
-Map<String, dynamic> _$CostomerResponseToJson(CostomerResponse instance) =>
+Map<String, dynamic> _$CustomerResponseToJson(CustomerResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
@@ -48,7 +48,7 @@ AuthenticationResponse _$AuthenticationResponseFromJson(
     AuthenticationResponse(
         json['customer'] == null
             ? null
-            : CostomerResponse.fromJson(
+            : CustomerResponse.fromJson(
               json['customer'] as Map<String, dynamic>,
             ),
         json['contacts'] == null

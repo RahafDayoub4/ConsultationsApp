@@ -10,20 +10,20 @@ class BaseResponse {
 }
 
 @JsonSerializable()
-class CostomerResponse {
+class CustomerResponse {
   @JsonKey(name: "id")
-  int? id;
+  String? id;
   @JsonKey(name: "name")
   String? name;
   @JsonKey(name: "numOfNotifications")
   int? numOfNotifications;
-  CostomerResponse(this.id, this.name, this.numOfNotifications);
+  CustomerResponse(this.id, this.name, this.numOfNotifications);
   //from json to fetch from API
-  factory CostomerResponse.fromJson(Map<String, dynamic> json) =>
-      _$CostomerResponseFromJson(json);
+  factory CustomerResponse.fromJson(Map<String, dynamic> json) =>
+      _$CustomerResponseFromJson(json);
 
   // to json if I want to send It to API
-  Map<String, dynamic> toJson() => _$CostomerResponseToJson(this);
+  Map<String, dynamic> toJson() => _$CustomerResponseToJson(this);
 }
 
 @JsonSerializable()
@@ -46,7 +46,7 @@ class ContactsResponse {
 @JsonSerializable()
 class AuthenticationResponse extends BaseResponse {
   @JsonKey(name: "customer")
-  CostomerResponse? customer;
+  CustomerResponse? customer;
   @JsonKey(name: "contacts")
   ContactsResponse? contacts;
   AuthenticationResponse(this.customer, this.contacts);

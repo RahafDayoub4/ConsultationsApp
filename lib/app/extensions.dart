@@ -1,5 +1,5 @@
 extension NonNullString on String? {
-  String orEmpty() {
+  String onEmpty() {
     if (this == null) {
       return "";
     } else {
@@ -7,3 +7,14 @@ extension NonNullString on String? {
     }
   }
 }
+
+extension NonNullInteger on int? {
+  int onZero() {
+    if (this == null) {
+      return 0;
+    } else {
+      return this!;
+    }
+  }
+}
+
