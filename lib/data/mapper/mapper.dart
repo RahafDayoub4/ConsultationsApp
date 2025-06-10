@@ -1,5 +1,5 @@
 import 'package:newtest/data/responses/responses.dart';
-import 'package:newtest/domain/models.dart';
+import 'package:newtest/domain/models/models.dart';
 import 'package:newtest/app/extensions.dart';
 
 extension CustomerResponseMapper on CustomerResponse? {

@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:newtest/domain/models.dart';
+import 'package:newtest/domain/models/models.dart';
 import 'package:newtest/presentation/base/base_view_model.dart';
 import 'package:newtest/presentation/resources/assests_manger.dart';
 import 'package:newtest/presentation/resources/strings_manger.dart';
