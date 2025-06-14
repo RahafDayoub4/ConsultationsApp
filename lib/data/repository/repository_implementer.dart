@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:newtest/data/data_source/remote_data_source.dart';
 import 'package:newtest/data/mapper/mapper.dart';
+import 'package:newtest/data/network/error_handler.dart';
 import 'package:newtest/data/network/failure.dart';
 import 'package:newtest/data/network/network_info.dart';
 import 'package:newtest/data/network/requests.dart';
@@ -17,17 +18,21 @@ class RepositoryImpl implements Repository {
     LoginRequest loginRequest,
   ) async {
     if (await networkInfo.isConnected) {
-      //its connected to net , call api
-      final response = await remoteDataSource.login(loginRequest);
+      try {
+        //its connected to net , call api
+        final response = await remoteDataSource.login(loginRequest);
 
-      if (response.status == 0) {
-        //succses
-        return Right(response.toDomain());
-      } else {
-        return Left(Failure(response.status!, response.message!));
+        if (response.status == AppInternalStatus.SUCCESS) {
+          //succses
+          return Right(response.toDomain());
+        } else {
+          return Left(Failure(AppInternalStatus.FAILURE, response.message ?? ResponseMesaage.DEFAULT));
+        }
+      } catch (error) {
+        return left(ErrorHandler.handle(error).failure);
       }
     } else {
-      return Left(Failure(501, "no internet connection"));
+      return left(DataSource.NO_INTERENT_CONNECTION.getFailure());
     }
   }
 }

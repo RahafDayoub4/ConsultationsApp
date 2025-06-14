@@ -166,3 +166,8 @@ class ResponseMesaage {
   static const String UNKNOUN = "Something went wrong ,Try again later";
   static const String DEFAULT = "Something went wrong ,Try again later";
 }
+
+class AppInternalStatus {
+  static const int SUCCESS = 0;
+  static const int FAILURE = 1;
+}
