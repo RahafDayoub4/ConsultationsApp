@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/rendering.dart';
+import 'package:newtest/domain/usecase/login_usecase.dart';
 import 'package:newtest/presentation/base/base_view_model.dart';
 import 'package:newtest/presentation/common/freezed_data_classes.dart';
 
@@ -12,6 +13,8 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
 
   var loginObject = LoginObject("", "");
+  final LoginUsecase _loginUsecase;
+  LoginViewModel(this._loginUsecase);
 
   @override
   void dispose() {
@@ -32,9 +35,18 @@ class LoginViewModel extends BaseViewModel
   Sink get inputPassword => _userPasswordController.sink;
 
   @override
-  login() {
-    // TODO: implement login
-    throw UnimplementedError();
+  login() async {
+    (await _loginUsecase.execute(
+      LoginUseCaseInput(loginObject.userName, loginObject.Password),
+    )).fold(
+      (failure) => {
+        print(failure.message)
+
+      },
+      (data) => {
+        print(data.customer?.name)
+      },
+    ); //it is a function inside the either to return the left and the right
   }
 
   //output
