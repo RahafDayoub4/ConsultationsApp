@@ -11,15 +11,19 @@ class LoginViewModel extends BaseViewModel
       StreamController<String>.broadcast();
   final StreamController _userPasswordController =
       StreamController<String>.broadcast();
+  final StreamController _areAllInputsValidStreamController =
+      StreamController<void>.broadcast();
 
   var loginObject = LoginObject("", "");
-  final LoginUsecase _loginUsecase;
-  LoginViewModel(this._loginUsecase);
+  //final LoginUsecase _loginUsecase;
+  //LoginViewModel(this._loginUsecase);
+  LoginViewModel();
 
   @override
   void dispose() {
     _userNameStreamController.close();
     _userPasswordController.close();
+    _areAllInputsValidStreamController.close();
   }
 
   @override
@@ -36,17 +40,12 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
-    (await _loginUsecase.execute(
-      LoginUseCaseInput(loginObject.userName, loginObject.Password),
-    )).fold(
-      (failure) => {
-        print(failure.message)
-
-      },
-      (data) => {
-        print(data.customer?.name)
-      },
-    ); //it is a function inside the either to return the left and the right
+    // (await _loginUsecase.execute(
+    //   LoginUseCaseInput(loginObject.userName, loginObject.Password),
+    // )).fold(
+    //   (failure) => {print(failure.message)},
+    //   (data) => {print(data.customer?.name)},
+    // ); //it is a function inside the either to return the left and the right
   }
 
   //output
@@ -68,17 +67,32 @@ class LoginViewModel extends BaseViewModel
     return userName.isNotEmpty;
   }
 
+  bool _areAllInputsValid() {
+    return _isUserNameValid(loginObject.userName) &&
+        _isPasswordValid(loginObject.Password);
+  }
+
   @override
   setPassword(String password) {
     inputPassword.add(password);
     loginObject = loginObject.copyWith(Password: password);
+    inputAreAllInputsValid.add(null);
   }
 
   @override
   setUserName(String userNmae) {
     inputUserName.add(userNmae);
     loginObject = loginObject.copyWith(userName: userNmae);
+    inputAreAllInputsValid.add(null);
   }
+
+  @override
+  Sink get inputAreAllInputsValid => _areAllInputsValidStreamController.sink;
+
+  @override
+  Stream<bool> get outIsAreAllInputsValid => _areAllInputsValidStreamController
+      .stream
+      .map((_) => _areAllInputsValid());
 }
 
 mixin LoginViewModelInput {
@@ -88,9 +102,11 @@ mixin LoginViewModelInput {
 
   Sink get inputUserName;
   Sink get inputPassword;
+  Sink get inputAreAllInputsValid;
 }
 
 mixin LoginViewModelOutput {
   Stream<bool> get outIsUserNameValid;
   Stream<bool> get outIsPasswordValid;
+  Stream<bool> get outIsAreAllInputsValid;
 }
