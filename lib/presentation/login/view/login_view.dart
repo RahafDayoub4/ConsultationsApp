@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:newtest/app/di.dart';
+import 'package:newtest/domain/repository/repository.dart';
+import 'package:newtest/domain/usecase/login_usecase.dart';
 import 'package:newtest/presentation/login/viewmodel/login_viewmodel.dart';
 import 'package:newtest/presentation/resources/assests_manger.dart';
 import 'package:newtest/presentation/resources/color_manger.dart';
@@ -13,7 +16,8 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  final LoginViewModel _viewModel = LoginViewModel();
+  final LoginViewModel _viewModel = instance<LoginViewModel>();
+
   final TextEditingController _userNameController = TextEditingController();
   final TextEditingController _passWordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
@@ -28,8 +32,14 @@ class _LoginViewState extends State<LoginView> {
   }
 
   @override
+  void initState() {
+    _bind();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return _getContentWidget();
   }
 
   Widget _getContentWidget() {
@@ -108,38 +118,46 @@ class _LoginViewState extends State<LoginView> {
                       );
                     },
                   ),
-
-
                 ),
 
-                Padding(padding: EdgeInsets.only(top: AppPadding.p12, left: AppPadding.p20 ,right:AppPadding.p20 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                   TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, Routes.forgotPasswordRoute);
-                  },
-                  child: Text(
-                    "Forgot Password",
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context).textTheme.headlineMedium,
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: AppPadding.p12,
+                    left: AppPadding.p20,
+                    right: AppPadding.p20,
+                  ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Routes.forgotPasswordRoute,
+                          );
+                        },
+                        child: Text(
+                          "Forgot Password",
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.pushReplacementNamed(
+                            context,
+                            Routes.registerRoute,
+                          );
+                        },
+                        child: Text(
+                          "Regester",
+                          textAlign: TextAlign.end,
+                          style: Theme.of(context).textTheme.headlineMedium,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
-                 TextButton(
-                  onPressed: () {
-                    Navigator.pushReplacementNamed(context, Routes.registerRoute);
-                  },
-                  child: Text(
-                    "Regester",
-                    textAlign: TextAlign.end,
-                    style: Theme.of(context).textTheme.headlineMedium,
-                  ),
-                ),
-
-                  ],
-                ),
-                ) 
               ],
             ),
           ),
