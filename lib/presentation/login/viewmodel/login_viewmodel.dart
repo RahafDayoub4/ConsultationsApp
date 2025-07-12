@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:newtest/domain/usecase/login_usecase.dart';
 import 'package:newtest/presentation/base/base_view_model.dart';
 import 'package:newtest/presentation/common/freezed_data_classes.dart';
+import 'package:newtest/presentation/common/state_randerer/state_renderer_impl.dart';
 
 class LoginViewModel extends BaseViewModel
     with LoginViewModelInput, LoginViewModelOutput {
@@ -17,10 +18,11 @@ class LoginViewModel extends BaseViewModel
   var loginObject = LoginObject("", "");
   final LoginUsecase _loginUsecase;
   LoginViewModel(this._loginUsecase);
- 
 
   @override
   void dispose() {
+    super
+        .dispose(); //added after i made the input stream controller for the flow state
     _userNameStreamController.close();
     _userPasswordController.close();
     _areAllInputsValidStreamController.close();
@@ -28,7 +30,8 @@ class LoginViewModel extends BaseViewModel
 
   @override
   void start() {
-    // TODO: implement start
+    //view model should  tell view please show content state
+    inputState.add(ContentState());
   }
 
   //input

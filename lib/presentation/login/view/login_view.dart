@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newtest/app/di.dart';
-import 'package:newtest/domain/repository/repository.dart';
-import 'package:newtest/domain/usecase/login_usecase.dart';
+import 'package:newtest/presentation/common/state_randerer/state_renderer_impl.dart';
 import 'package:newtest/presentation/login/viewmodel/login_viewmodel.dart';
 import 'package:newtest/presentation/resources/assests_manger.dart';
 import 'package:newtest/presentation/resources/color_manger.dart';
@@ -39,12 +38,27 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return _getContentWidget();
+    //after i make the flow i wil make it controls the show of the screens
+    return Scaffold(
+      backgroundColor: ColorManger.white,
+      body: StreamBuilder<FlowState>(
+        stream: _viewModel.outputState,
+        builder: (context, snapshot) {
+          return snapshot.data?.getScreenWidget(
+                context,
+                _getContentWidget(),
+                () {
+                  _viewModel.login();
+                },
+              ) ??
+              _getContentWidget();
+        },
+      ),
+    );
   }
 
   Widget _getContentWidget() {
-    return Scaffold(
-      body: Container(
+    return  Container(
         padding: EdgeInsets.only(top: AppPadding.p100),
         color: ColorManger.white,
         child: SingleChildScrollView(
@@ -162,7 +176,7 @@ class _LoginViewState extends State<LoginView> {
             ),
           ),
         ),
-      ),
+      
     );
   }
 
