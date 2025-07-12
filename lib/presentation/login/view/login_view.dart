@@ -26,7 +26,7 @@ class _LoginViewState extends State<LoginView> {
       () => _viewModel.setUserName(_userNameController.text),
     );
     _passWordController.addListener(
-      () => _viewModel.setUserName(_passWordController.text),
+      () => _viewModel.setPassword(_passWordController.text),
     );
   }
 

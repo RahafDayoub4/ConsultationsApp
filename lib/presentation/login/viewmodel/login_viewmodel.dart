@@ -4,6 +4,7 @@ import 'package:flutter/rendering.dart';
 import 'package:newtest/domain/usecase/login_usecase.dart';
 import 'package:newtest/presentation/base/base_view_model.dart';
 import 'package:newtest/presentation/common/freezed_data_classes.dart';
+import 'package:newtest/presentation/common/state_randerer/state_render.dart';
 import 'package:newtest/presentation/common/state_randerer/state_renderer_impl.dart';
 
 class LoginViewModel extends BaseViewModel
@@ -43,11 +44,23 @@ class LoginViewModel extends BaseViewModel
 
   @override
   login() async {
+    inputPassword.add(
+      LoadingState(
+        stateRendererType: StateRendererType.popuplLodingState,
+      ),
+    );
     (await _loginUsecase.execute(
       LoginUseCaseInput(loginObject.userName, loginObject.Password),
     )).fold(
-      (failure) => {print(failure.message)},
-      (data) => {print(data.customer?.name)},
+      (failure) => {
+        inputState.add(ErrorState(StateRendererType.popupErrorState, failure.message)),
+        
+        print(failure.message)},
+      (data) => {
+        //content
+        inputState.add(ContentState()),
+        
+        print(data.customer?.name)},
     ); //it is a function inside the either to return the left and the right
   }
 
